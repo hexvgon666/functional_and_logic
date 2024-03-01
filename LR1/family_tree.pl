@@ -72,3 +72,15 @@ b_s(X, Y):- sister(X, Y).
 
 % b_s(+X)
 b_s(X):- b_s(Y, X), write(Y), nl, fail.
+
+% daughter(?X, +Y) - является ли X дочкой Y
+daughter(X, Y):- woman(X), parent(Y, X).
+
+% daughter(+X) - вывести всех дочек X
+daughter(X):- daughter(Y, X), write(Y), nl, fail.
+
+% wife(?X, +Y) - является ли X женой Y
+wife(X, Y):- woman(X), parent(X, Z), parent(Y, Z), X \= Y.
+
+% wife(+X) - вывести жену X
+wife(X):- wife(Y, X), write(Y).
