@@ -84,3 +84,35 @@ wife(X, Y):- woman(X), parent(X, Z), parent(Y, Z), X \= Y.
 
 % wife(+X) - вывести жену X
 wife(X):- wife(Y, X), write(Y).
+
+% grand_so(?X, +Y) - является ли X внуком Y
+grand_so(X, Y):- man(X), parent(Parent, X), parent(Y, Parent).
+
+% grand_sons(+X) - вывести всех внуков X
+grand_sons(X):- grand_so(Y, X), write(Y), nl, fail.
+
+% grand_sons_facts(+X) - вывести всех внуков X с использованием только
+% базы фактов
+grand_sons_facts(X):- man(Y), parent(Parent, Y), parent(X, Parent), write(Y), nl, fail.
+
+% grand_ma_and_son(+X, +Y) - является ли X бабушкой Y
+grand_ma_and_son(X, Y):- woman(Y), grand_so(X, Y).
+grand_ma_and_son(X, Y):- woman(X), grand_so(Y, X).
+
+% grand_ma_and_son_facts(+X, +Y) - является ли X бабушкой с
+% использованием только базы фактов
+grand_ma_and_son_facts(X, Y):- woman(Y), man(X), parent(Parent, X), parent(Y, Parent).
+grand_ma_and_son_facts(Y, X):- woman(Y), man(X), parent(Parent, X), parent(Y, Parent).
+
+% aunt(?X, +Y) - является ли X дядей Y
+aunt(X, Y):- man(X), parent(Parent_plem, Y), brother(X, Parent_plem).
+
+% aunt_facts(?X, +Y) - является ли X дядей Y с использованием только
+% базы фактов
+aunt_facts(X, Y):- man(X), parent(Parent_plem, Y), parent(ObsParent, Parent_plem), parent(ObsParent, X), Parent_plem \= X.
+
+% aunts(+X) - вывести всех дядей X
+aunts(X):- aunt(Y, X), write(Y), nl, fail.
+
+% aunts_facts(+Y) - вывести всех дядей Y
+aunts_facts(Y):- man(X), parent(Parent_plem, Y), parent(ObsParent, Parent_plem), parent(ObsParent, X), Parent_plem \= X, write(X), nl, fail.
