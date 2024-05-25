@@ -5,6 +5,12 @@ class recursions {
     //Найти максимальную цифру числа. Рекурсия вверх.
     fun max(x: Int): Int = if (x < 10) x else {if(x%10 > max(x/10)) x%10 else max(x/10)}
 
+    //Найти максимальную цифру числа делящегося на 7. Рекурсия вверх.
+    fun max7(x: Int): Int { if (x < 10) { return if (x % 7 == 0) x else 0 } else {
+            val digit = x % 10
+            val maxDigit = max(x / 10)
+            return if ((digit > maxDigit) && (x % 7 == 0)) digit else maxDigit } }
+
     //Найти минимальную нечетную цифру числа. Рекурсия вверх.
     fun minOdd(x: Int): Int = if(x < 10) {if (x%2 != 0) x else 9} else {if ((x%10 < minOdd(x/10)) && ((x%10)%2 != 0)) x%10 else minOdd(x/10)}
 
@@ -38,8 +44,9 @@ class recursions {
     fun main() {
         val scanner = Scanner(System.`in`)
         val x: Int = scanner.nextInt()
-//        val y: Int = scanner.nextInt()
-        println(oneFunc(x, ::max))
+  //      val y: Int = scanner.nextInt()
+        println(max7(x))
+    //        println(twoFunc(x,y, ::gcd))
     }
 }
 

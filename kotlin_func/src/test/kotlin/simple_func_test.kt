@@ -34,7 +34,7 @@ internal class simple_func_test {
     fun sumc() {
         val main = simple_func()
         val expected = 33
-        assertEquals(expected, main.sumcd(9996))
+        assertEquals(expected, main.sumc(9996))
     }
 
     @org.junit.jupiter.api.Test
