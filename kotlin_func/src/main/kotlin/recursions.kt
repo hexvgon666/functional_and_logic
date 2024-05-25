@@ -1,4 +1,3 @@
-import java.lang.System.`in`
 import java.util.*
 
 class recursions {
@@ -25,11 +24,22 @@ class recursions {
 
 
 
+    //Функция высшего порядка на 1 числовой аргумент
+    fun oneFunc(x:Int,f:(Int)->Int):Int= f(x)
+
+    //Функция высшего порядка на 2 числовых аргумента
+    fun twoFunc(x:Int,y:Int,f:(Int,Int)->Int) = f(x,y)
+
+    //Функция высшего порядка на 3 числовых аргумента
+    fun threeFunc(x:Int,y:Int,z:Int,f:(Int,Int,Int)->Int) = f(x,y,z)
+
+
+
     fun main() {
         val scanner = Scanner(System.`in`)
         val x: Int = scanner.nextInt()
-        val y: Int = scanner.nextInt()
-        println(gcdTail(x, y, y))
+//        val y: Int = scanner.nextInt()
+        println(oneFunc(x, ::max))
     }
 }
 
