@@ -1,0 +1,4 @@
+fun main(args: Array<String>) {
+    val s = "fun main(args: Array<String>) {    val s = \"\"    print(s.substringBefore(\" val\") + \"\\n\" + s.substringBefore(\"\\\"   \").substringAfter(\"{\") + s.substringBefore(\"\\\"\\\"   \") + \"\\\\\" + s.substringBefore(\"\\\"   \").substringAfter(\"s = \") + \"\\\\\" + s.substringAfter(\"s = \\\"\") + s.substringAfter(\"= \\\"\").substringBefore(\" pr\") + \"\\n\" + s.substringAfter(\"\\\"\\\"\").substringBefore(\"}\") + \"\\n\" + \"}\")}"
+    println(s.substringBefore(" val") + "\n" + s.substringBefore("\"   ").substringAfter("{") + s.substringBefore("\"\"   ") + "\\" + s.substringBefore("\"   ").substringAfter("s = ") + "\\" + s.substringAfter("s = \"") + s.substringAfter("= \"").substringBefore(" pr") + "\n" + s.substringAfter("\"\"").substringBeforeLast("}") + "\n" + "}")
+}
