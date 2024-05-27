@@ -262,6 +262,64 @@ class cortezh{
             con(dol,num,count2,index + 1)
     }
 
+    //Задание 7.1 Даны две последовательности, найти наибольшую по длине общую
+    //подпоследовательность.
+    fun long(s1: String, s2: String): String {
+        val matrix = Array(s1.length + 1) { IntArray(s2.length + 1) }
+
+        fun calculateMatrix(i: Int, j: Int) {
+            if (i > s1.length) {
+                return
+            } else if (j <= s2.length) {
+                if (i == 0 || j == 0) {
+                    matrix[i][j] = 0
+                } else if (s1[i - 1] == s2[j - 1]) {
+                    matrix[i][j] = matrix[i - 1][j - 1] + 1
+                } else {
+                    matrix[i][j] = maxOf(matrix[i - 1][j], matrix[i][j - 1])
+                }
+                calculateMatrix(i, j + 1)
+            } else {
+                calculateMatrix(i + 1, 0)
+            }
+        }
+        calculateMatrix(0, 0)
+
+        fun backtrace(i: Int, j: Int): String {
+            return if (i == 0 || j == 0) {
+                ""
+            } else if (s1[i - 1] == s2[j - 1]) {
+                backtrace(i - 1, j - 1) + s1[i - 1]
+            } else if (matrix[i - 1][j] > matrix[i][j - 1]) {
+                backtrace(i - 1, j)
+            } else {
+                backtrace(i, j - 1)
+            }
+        }
+
+        val result = backtrace(s1.length, s2.length)
+        return result
+    }
+
+    //2 Дан список, построить кортеж, содержащий пять списков, при этом
+    //- первый список содержит результат деления на два только четных элементов исходного,
+    //- второй список содержит результат деления на три только тех элементов первого,
+    //которые делятся на три,
+    //- третий список содержит квадраты значений второго списка,
+    //- четвертый список содержит только те элементы третьего, которые встречаются в первом,
+    //- пятый список содержит все элементы второго, третьего и четвертого списков.
+
+    fun tuples(list1: List<Int>): TupleResult {
+        val resultList1 = list1.filter { it % 2 == 0 }.map { it / 2 }
+        val resultList2 = resultList1.filter { it % 3 == 0 }.map { it / 3 }
+        val resultList3 = resultList2.map { it * it }
+        val resultList4 = resultList3.filter { it in resultList1 }
+        val resultList5 = resultList2 + resultList3 + resultList4
+        return TupleResult(resultList1, resultList2, resultList3, resultList4, resultList5)
+    }
+
+    data class TupleResult(val list1: List<Int>, val list2: List<Int>, val list3: List<Int>, val list4: List<Int>, val list5: List<Int>)
+
     fun main() {
 
         val scanner = Scanner(System.`in`)
@@ -273,7 +331,7 @@ class cortezh{
         //val list3 = scanner.nextLine().split(" ").map { it.toInt() }
         //val a = scanner.nextInt()
         //val b = scanner.nextInt()
-        println(kvad(list1))
+        println(tuples(list1))
 
     }
 }
