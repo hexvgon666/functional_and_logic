@@ -1,3 +1,5 @@
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.Scanner
 
 class cortezh{
@@ -164,7 +166,101 @@ class cortezh{
             otvet
     }
 
+    //41 Дан целочисленный массив. Найти среднее арифметическое модулей его элементов.
+    fun arif(num: List<Int>) = arif2(num, 0,0)
 
+    fun arif2(num: List<Int>, sum: Int,index: Int): Int{
+        var sum2 = sum
+        if(index <= num.size - 1){
+            sum2 += Math.abs(num[index])
+        }
+        return if(index == num.size - 1)
+            sum2
+        else
+            arif2(num,sum2,index + 1)
+
+    }
+
+    //48 Для введенного списка построить список с номерами элемента, который повторяется
+    //наибольшее число раз.
+    fun povtor(num: List<Int>) = povtor2(num, mutableListOf<Int>(), 0)
+
+    fun povtor2(num: List<Int>, count: MutableList<Int>,index: Int): List<Int>{
+        var max = bool(num, 0, 1, num[0], 0,0,0)
+        if(max == num[index])
+            count.add(index)
+        return if(index == num.size - 1)
+            count
+        else
+            povtor2(num,count,index+1)
+    }
+
+    fun bool(num: List<Int>, count: Int,index: Int,mam: Int,shet: Int,otvet: Int,zoo: Int): Int{
+        var max = mam
+        var count2 =count
+        var shet2 = shet
+        if (max == num[index]){
+            count2 += 1
+        }
+        return if(index == num.size -1) {
+            if (shet < num.size - 1) {
+                shet2 += 1
+                if(otvet < count2)
+                    bool(num,0,0,max,shet2,count2,max)
+                else
+                    bool(num,0,0,num[shet2],shet2,count2,zoo)
+            }
+            else
+                zoo
+        }
+        else
+            bool(num,count2,index+1,max,shet,otvet,zoo)
+    }
+
+    //53 Для введенного списка построить новый с элементами, большими, чем среднее
+    //арифметическое списка, но меньшими, чем его максимальное значение.
+    fun arefm(num: List<Int>) = arefm2(num,0, mutableListOf<Int>())
+
+    fun arefm2(num: List<Int>, index: Int,otvet: MutableList<Int>): List<Int>{
+        val max = num.maxOrNull()
+        val count2 = arif(num)
+        val sred = BigDecimal(count2).divide(BigDecimal(num.size), 2, RoundingMode.HALF_UP)
+        if (sred < BigDecimal(num[index]) && (max ?: 0) > num[index]) {
+            otvet.add(num[index])
+        }
+        return if (index == num.size - 1) {
+            otvet
+        } else {
+            arefm2(num, index + 1, otvet)
+        }
+    }
+
+    //59 Дан список. Построить новый список из квадратов неотрицательных чисел,
+    //меньших 100 и встречающихся в массиве больше 2 раз.
+    fun kvad(num: List<Int>) = kvad2(num,0, mutableListOf<Int>(), mutableListOf<Int>())
+
+    fun kvad2(num: List<Int>, index: Int,otvet: MutableList<Int>,zon: MutableList<Int>): List<Int>{
+        var dol = num[index]
+        var kum = con(dol,num,0,0)
+        if(kum > 2 && (num[index] * num[index]) < 100 && zon.contains(num[index]) == false) {
+            zon.add(num[index])
+            otvet.add(num[index] * num[index])
+        }
+        return if(index == num.size - 1)
+            otvet
+        else
+            kvad2(num,index+1,otvet,zon)
+    }
+
+    fun con(dol: Int, num: List<Int>, count: Int,index: Int): Int{
+        var count2 = count
+        if(dol == num[index])
+            count2 += 1
+        return if(index == num.size - 1)
+            count2
+        else
+            con(dol,num,count2,index + 1)
+    }
 
     fun main() {
 
@@ -177,7 +273,7 @@ class cortezh{
         //val list3 = scanner.nextLine().split(" ").map { it.toInt() }
         //val a = scanner.nextInt()
         //val b = scanner.nextInt()
-        println(findUniqueElement(list1))
+        println(kvad(list1))
 
     }
 }
